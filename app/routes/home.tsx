@@ -1,7 +1,7 @@
 import Header from "~/components/home/header";
 import type { Route } from "./+types/home";
 import ChatItem from "~/components/home/chatItem";
-import ChatScreen from "~/components/home/chatScreen";
+import ChatScreen from "~/components/home/chatScreen/chatScreen";
 
 export function meta({}: Route.MetaArgs) {
   return [

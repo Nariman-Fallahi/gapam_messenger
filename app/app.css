@@ -22,6 +22,34 @@ body {
   display: none !important;
 }
 
+.openEmoji {
+  display: flex;
+  animation: OPEN_EMOJI 0.2s ease-in forwards;
+}
+
+@keyframes OPEN_EMOJI {
+  0% {
+    height: 0px;
+  }
+  100% {
+    height: 500px;
+  }
+}
+
+.closeEmoji {
+  animation: CLOSE_EMOJI 0.2s ease-in forwards;
+}
+
+@keyframes CLOSE_EMOJI {
+  0% {
+    height: 220px;
+  }
+  100% {
+    height: 0px;
+    display: none;
+  }
+}
+
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(224 71.4% 4.1%);
