@@ -1,22 +1,33 @@
 import { ArrowRight, SendHorizontal, Trash } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import useAutosizeTextArea from "~/hooks/useAutosizeTextArea";
 import Spinner from "../ui/spinner";
 
 const EmojiPicker = lazy(() => import("emoji-picker-react"));
 
 export default function ChatScreen() {
   const [value, setValue] = useState("");
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  useAutosizeTextArea(textareaRef.current, value);
+  const maxHeight = 80;
 
-  const handleChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const val = evt.target?.value;
+  const resizeTextArea = () => {
+    if (!textAreaRef.current) {
+      return;
+    }
 
-    setValue(val);
+    textAreaRef.current.style.height = "auto";
+    const newHeight = textAreaRef.current.scrollHeight;
+    textAreaRef.current.style.height = `${Math.min(newHeight, maxHeight)}px`;
+    textAreaRef.current.style.overflowY =
+      newHeight > maxHeight ? "scroll" : "hidden";
   };
+
+  useEffect(() => {
+    resizeTextArea();
+    window.addEventListener("resize", resizeTextArea);
+    return () => window.removeEventListener("resize", resizeTextArea);
+  }, []);
 
   return (
     <div className="w-full flex flex-col h-screen">
@@ -52,9 +63,13 @@ export default function ChatScreen() {
             <textarea
               className="w-full outline-none text-sm p-2 resize-none transition-all duration-400"
               maxLength={500}
-              ref={textareaRef}
+              ref={textAreaRef}
               rows={1}
-              onChange={handleChange}
+              onChange={(e) => {
+                setValue(e.target.value);
+                resizeTextArea();
+              }}
+              value={value}
             />
           </div>
         </div>
@@ -68,13 +83,13 @@ export default function ChatScreen() {
             </div>
           }
         >
-          <EmojiPicker
+          {/* <EmojiPicker
             searchDisabled
             skinTonesDisabled
             lazyLoadEmojis
             width="100%"
             height="100%"
-          />
+          /> */}
         </Suspense>
       </div>
     </div>
