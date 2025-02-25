@@ -13,7 +13,7 @@ export default function Header() {
       <div className="flex w-full justify-between gap-2 items-center">
         <DropdownMenu dir="rtl">
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center justify-center rounded-full size-9  p-2 outline-none hover:bg-gray-200 active:scale-95 bg-gray-100 cursor-pointer">
+            <button className="flex items-center justify-center rounded-full size-9  p-2 outline-none hover:bg-gray-200 active:scale-95 bg-gray-100 transition-all duration-400 cursor-pointer">
               <Menu />
             </button>
           </DropdownMenuTrigger>
